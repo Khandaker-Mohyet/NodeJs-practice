@@ -8,29 +8,22 @@ const fs = require("fs")
 
 // console.log(data);
 
-console.log("Task 1")
 
 
 
-const text = 'node js';
-
-fs.writeFile('./hello.txt', text, {encoding: "utf-8"}, (err, data) => {
-  if (err) {
-    console.log('Error writing file:', err);
-    return;
-  }
-  console.log('After writing', data);
-});
-
-
-fs.readFile('./hello.txt', {encoding:"utf-8"}, (err, data)=>{
-    if(err){
-        console.log("Something went wrong",err)
+fs.readFile('./hello-world.txt', { encoding: "utf-8" }, (err, data) => {
+    if (err) {
+        console.log("Something went wrong", err)
         return
     }
-    console.log(data)
+    fs.writeFile('./hello.txt', data, { encoding: "utf-8" }, (err) => {
+        if (err) {
+            console.log('Error writing file:', err);
+            return;
+        }
+        console.log('After writing');
+    });
 });
 
 
 
-console.log('Task 3')
