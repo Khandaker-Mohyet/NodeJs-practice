@@ -34,7 +34,22 @@ readStream.on("data", (data)=>{
 
     writeStream.write(data,(err)=>{
         if(err){
-            throw Error("Error", Error)
+            throw Error("Error", err)
         }
     })
+})
+
+readStream.on("error",(err)=>{
+    if(err){
+            throw Error("Error", err)
+        }
+})
+
+readStream.on("end",()=>{
+    console.log("reading ended");
+    writeStream.end()
+})
+
+writeStream.on("finish",()=>{
+    console.log("written successfully")
 })
