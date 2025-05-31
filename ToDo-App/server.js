@@ -106,6 +106,14 @@ const server = http.createServer((req, res) => {
             );
         });
     }
+
+    // Delete todo
+
+    else if (pathname === "/todos/delete-todo" && req.method === "DELETE") {
+      const title = url.searchParams.get("title");
+     
+       
+    }
     else {
         res.end("Route not found")
     }
