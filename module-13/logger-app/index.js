@@ -7,7 +7,9 @@ const inputArguments = process.argv.slice(2);
 
 const text = inputArguments.join(" ").concat("\n")
 
-const message = `${text} \n`
+const timestamp = new Date().toISOString();
+
+const message = `${text} ${timestamp} \n`
 
 if(!message){
     console.log("Please provide a message to log");
