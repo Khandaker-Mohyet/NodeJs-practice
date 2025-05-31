@@ -1,40 +1,37 @@
 const http = require("http")
+const path = require("path")
+const fs = require("fs")
 
-const data = [
-  {
-    "title": "prisma",
-    "body": "Learning prisma",
-    "createdAt": "5/18/2025, 1:25:02 AM"
-  },
-  {
-    "title": "typescript",
-    "body": "learning node",
-    "createdAt": "5/18/2025, 1:25:12 AM"
-  },
-  {
-    "title": "express",
-    "body": "Learning advanced express",
-    "createdAt": "5/29/2025, 5:55:16 AM"
-  },
-  {
-    "title": "mongodb",
-    "body": "learning mongodb",
-    "createdAt": "5/29/2025, 5:55:46 AM"
-  }
-]
+const filePath = path.join(__dirname, './db/todo.json')
+
 
 const server = http.createServer((req,res)=>{
-    // console.log(req.url, req.method)
-    // res.end("Welcome to ToDo App Server")
+
+    // get all todos
+    
     if(req.url === "/todos" && req.method === "GET"){
+        const data = fs.readFileSync(filePath, {encoding: "utf-8"})
         res.writeHead(200,{
             "content-type":"application/json",
         })
-        // res.setHeader("content-type", "text/plain");
-        // res.setHeader("email", "ph2@gmail.com");
-        // res.statusCode = 201;
-        res.end(JSON.stringify(data))
+        res.end(data)
+
+        // Post todos
+
     } else if(req.url === "/todos/create-todo" && req.method === "POST"){
+
+        let data =""
+
+        req.on("data", (chunk)=>{
+            data = data + chunk
+        })
+
+        req.on("end", ()=>{
+            console.log(data)
+            const {title, body} = JSON.parse(data);
+            console.log({title, body})
+        })
+
         res.end("Todo Created")
     }else{
         res.end("Route not found")
