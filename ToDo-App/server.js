@@ -27,12 +27,24 @@ const server = http.createServer((req,res)=>{
         })
 
         req.on("end", ()=>{
-            console.log(data)
+            
             const {title, body} = JSON.parse(data);
-            console.log({title, body})
+            
+            const createdAt = new Date().toLocaleString();
+
+            const allTodos = fs.readFileSync(filePath,{encoding: "utf-8"});
+
+            const parsedAllTodos = JSON.parse(allTodos)
+            console.log(allTodos)
+
+            parsedAllTodos.push({title, body, createdAt})
+
+            fs.writeFileSync(filePath, JSON.stringify(parsedAllTodos, null, 2), {encoding: "utf-8"})
+
+            res.end(JSON.stringify({title, body, createdAt},null, 2))
         })
 
-        res.end("Todo Created")
+        
     }else{
         res.end("Route not found")
     }
