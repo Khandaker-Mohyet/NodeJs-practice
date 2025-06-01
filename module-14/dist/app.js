@@ -6,6 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
 app.get('/', (req, res) => {
+    res.send('Khandaker Mohyet work station and I am learning next level');
+});
+app.get('/todos', (req, res) => {
+    res.send('Khandaker Mohyet work station');
+});
+app.get('/todos/create-todo', (req, res) => {
     res.send('Khandaker Mohyet work station');
 });
 exports.default = app;
