@@ -1,14 +1,24 @@
-import express,{Application, Request, Response} from 'express'
+import express,{Application, Request, Response} from 'express';
+import fs from "fs"
+import path from "path"
 const app:Application = express()
+app.use(express.json())
+
+const filePath = path.join(__dirname, '../db/todo.json')
 
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Khandaker Mohyet work station and I am learning next level')
+  res.send('Welcome to TODOs app')
 })
 app.get('/todos', (req: Request, res: Response) => {
-  res.send('Khandaker Mohyet work station')
+  const data = fs.readFileSync(filePath, { encoding: "utf-8" })
+        
+  console.log(data)
+  res.send(data)
 })
-app.get('/todos/create-todo', (req: Request, res: Response) => {
+app.post('/todos/create-todo', (req: Request, res: Response) => {
+  const data = req.body;
+  console.log(data)
   res.send('Khandaker Mohyet work station')
 })
 
