@@ -17,8 +17,8 @@ app.get('/todos', (req: Request, res: Response) => {
   res.send(data)
 })
 app.post('/todos/create-todo', (req: Request, res: Response) => {
-  const data = req.body;
-  console.log(data)
+  const {title, body} = req.body;
+  console.log({title, body})
   res.send('Khandaker Mohyet work station')
 })
 

@@ -18,8 +18,8 @@ app.get('/todos', (req, res) => {
     res.send(data);
 });
 app.post('/todos/create-todo', (req, res) => {
-    const data = req.body;
-    console.log(data);
+    const { title, body } = req.body;
+    console.log({ title, body });
     res.send('Khandaker Mohyet work station');
 });
 exports.default = app;
