@@ -7,26 +7,34 @@ const filePath = path.join(__dirname, '../../../db/todo.json')
 
 export const todosRouter = express.Router();
 
-todosRouter.get('/', (req: Request, res: Response) => {
+todosRouter.get('/', async (req: Request, res: Response) => {
 
-    const data = fs.readFileSync(filePath, { encoding: "utf-8" })
+    const db = await client.db("todosDB")
+    const collection = await db.collection("todos")
+    
 
-    res.send(data)
+    const cursor = await collection.find({})
+    const todos = await cursor.toArray()
+
+    res.json(todos)
 })
 
 todosRouter.post('/create-todo', async (req: Request, res: Response) => {
 
+    const {title, description, priority}= req.body;
+
     const db = await client.db("todosDB")
     const collection = await db.collection("todos")
-    collection.insertOne({
-        title: "MongoDB",
-        description: "Learning Mongodb",
-        priority: "High",
+    await collection.insertOne({
+        title: title,
+        description: description,
+        priority: priority,
         isCompleted: false
     })
 
+    const cursor = await collection.find({})
+    const todos = await cursor.toArray()
 
-    const todos = collection.find({})
     res.json(todos)
 })
 
