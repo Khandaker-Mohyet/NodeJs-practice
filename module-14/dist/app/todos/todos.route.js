@@ -47,13 +47,16 @@ exports.todosRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, 
     const todo = yield collection.findOne({ _id: new mongodb_2.ObjectId(id) });
     res.json(todo);
 }));
-exports.todosRouter.put("/update-todo/:title", (req, res) => {
+exports.todosRouter.put("/update-todo/:id", (req, res) => {
     const { title, body } = req.body;
     console.log({ title, body });
     res.send('Khandaker Mohyet work station');
 });
-exports.todosRouter.delete("/delete-todo/:title", (req, res) => {
-    const { title, body } = req.body;
-    console.log({ title, body });
-    res.send('Khandaker Mohyet work station');
-});
+exports.todosRouter.delete("/delete-todo/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    const db = yield mongodb_1.client.db("todosDB");
+    const collection = yield db.collection("todos");
+    const data = yield collection.deleteOne({ _id: new mongodb_2.ObjectId(id) });
+    console.log(data);
+    res.json(data);
+}));
