@@ -62,7 +62,7 @@ todosRouter.put("/update-todo/:id", async (req: Request, res: Response) => {
         { $set: { title, description, priority, isCompleted } }, 
         { upsert: true }
     )
-    
+    res.json(updatedTodo)
 })
 
 
